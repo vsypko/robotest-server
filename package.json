@@ -1,7 +1,7 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "main": "app.ts",
+  "main": "app.js",
   "type": "module",
   "scripts": {
     "build": "rimraf ./build && npx tsc",

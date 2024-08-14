@@ -4,13 +4,14 @@ type Reposition = {
   method: string
   id: number
   x: number
-  y: number
+  z: number
+  angle: number
 }
 
 export default function robSocket(ws: WebSocket, wsServer: WebSocketServer) {
   ws.on('message', (msg: string) => {
     if (!msg) return
-    const pos = JSON.parse(msg)
+    const pos: Reposition = JSON.parse(msg)
 
     if (pos.method === 'reposition')
       // broadcast(JSON.stringify({ method: 'newposition', id: received.id, x: received.x, y: received.y }))
@@ -20,7 +21,7 @@ export default function robSocket(ws: WebSocket, wsServer: WebSocketServer) {
           id: pos.id,
           x: pos.x,
           z: pos.z,
-          angle: pos.z,
+          angle: pos.angle,
         })
       )
     if (pos.method === 'newposition') console.log('newone')
