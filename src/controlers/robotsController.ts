@@ -1,15 +1,23 @@
 import { Request, Response, NextFunction } from 'express'
+import db from '../db/db.connect.js'
 
-export function getRobots(req: Request, res: Response, next: NextFunction) {
+export async function getRobots(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
-    res.send({ msg: 'All robots sent' })
+    const robots = await db.query('SELECT * FROM robots;')
+    if (!robots) throw { status: 400, data: 'Bad request' }
+    res.send({ total_count: robots.rowCount, robots: robots.rows })
   } catch (err) {
     next(err)
   }
 }
-export function getRobot(req: Request, res: Response, next: NextFunction) {
+
+export async function getRobot(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
-    res.send({ msg: `Get Robot by ID = ${req.params.id}` })
+    if (!req.params.id) throw { status: 400, data: 'Bad request' }
+    const id = req.params.id
+    const robot = await db.query('SELECT * from robots WHERE id=$1;', [id])
+    if (!robot.rows[0]) throw { status: 400, data: 'Bad request' }
+    res.send(robot.rows[0])
   } catch (err) {
     next(err)
   }

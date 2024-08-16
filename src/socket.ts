@@ -29,8 +29,6 @@ export default function robSocket(ws: WebSocket, wsServer: WebSocketServer) {
 
   function broadcast(msg: string): void {
     wsServer.clients.forEach((client) => {
-      console.log(client)
-
       client.send(msg)
     })
   }
