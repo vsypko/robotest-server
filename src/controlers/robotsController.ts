@@ -3,9 +3,9 @@ import db from '../db/db.connect.js'
 
 export async function getRobots(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
-    const robots = await db.query('SELECT * FROM robots;')
-    if (!robots) throw { status: 400, data: 'Bad request' }
-    res.send({ total_count: robots.rowCount, robots: robots.rows })
+    const result = await db.query('SELECT * FROM robots;')
+    if (!result.rowCount) throw { status: 400, data: 'Bad request' }
+    res.send(result.rows)
   } catch (err) {
     next(err)
   }
