@@ -15,7 +15,7 @@ const missionRouter = express.Router()
 missionRouter.get('/:id', missions.getMission)
 missionRouter.post('/', missions.insertMission)
 missionRouter.put('/:id', missions.putMission)
-missionRouter.delete('/:id', missions.putMission)
+missionRouter.delete('/:id', missions.deleteMission)
 
 router.use('/mission', missionRouter)
 
