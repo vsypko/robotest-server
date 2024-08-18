@@ -29,13 +29,26 @@ export function insertRobot(req: Request, res: Response, next: NextFunction) {
     next(err)
   }
 }
-export function putRobot(req: Request, res: Response, next: NextFunction) {
+
+export async function putRobot(req: Request, res: Response, next: NextFunction) {
   try {
-    res.send({ msg: `Update Robot ID=${req.params.id}` })
+    const id = req.params.id
+    const { pose_x, pose_z, angle } = req.body
+
+    const result = await db.query('UPDATE robots SET pose_x=$1, pose_z=$2, angle=$3 WHERE id=$4', [
+      pose_x,
+      pose_z,
+      angle,
+      id,
+    ])
+    console.log(result)
+
+    res.send({ msg: 'Robot position updated' })
   } catch (err) {
     next(err)
   }
 }
+
 export function deleteRobot(req: Request, res: Response, next: NextFunction) {
   try {
     res.send({ msg: `Remove Robot ID=${req.params.id}` })
