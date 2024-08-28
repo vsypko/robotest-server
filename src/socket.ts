@@ -13,9 +13,8 @@ export default function robSocket(ws: WebSocket, wsServer: WebSocketServer) {
     if (!msg) return
     const pos: Reposition = JSON.parse(msg)
 
-    if (pos.method === 'reposition')
-      // broadcast(JSON.stringify({ method: 'newposition', id: received.id, x: received.x, y: received.y }))
-      ws.send(
+    if (pos.method === 'reposition') {
+      broadcast(
         JSON.stringify({
           method: 'newposition',
           id: pos.id,
@@ -24,6 +23,7 @@ export default function robSocket(ws: WebSocket, wsServer: WebSocketServer) {
           angle: pos.angle,
         })
       )
+    }
     if (pos.method === 'newposition') console.log('newone')
   })
 
