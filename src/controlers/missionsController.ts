@@ -48,8 +48,6 @@ export async function putMission(req: Request, res: Response, next: NextFunction
       robot_id,
       id,
     ])
-    console.log(result)
-
     res.send({ msg: 'Mission updated' })
   } catch (err) {
     next(err)

@@ -4,7 +4,7 @@ export interface Mission {
   description: string
   robot_id: number
   robot_name: string
-  model_name: string
+  model: string
   pose_x: number
   pose_z: number
   angle: number
@@ -20,7 +20,7 @@ export function rowToObject(rows: Mission[]) {
     const robot = {
       id: row.robot_id,
       name: row.robot_name,
-      model_name: row.model_name,
+      model: row.model,
       pose_x: row.pose_x,
       pose_z: row.pose_z,
       angle: row.angle,
