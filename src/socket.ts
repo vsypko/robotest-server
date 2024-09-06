@@ -3,28 +3,28 @@ import { WebSocket, WebSocketServer } from 'ws'
 type Reposition = {
   method: string
   id: number
-  x: number
-  z: number
+  pose_x: number
+  pose_z: number
   angle: number
 }
 
 export default function robSocket(ws: WebSocket, wsServer: WebSocketServer) {
   ws.on('message', (msg: string) => {
     if (!msg) return
-    const pos: Reposition = JSON.parse(msg)
+    const { method, id, pose_x, pose_z, angle }: Reposition = JSON.parse(msg)
 
-    if (pos.method === 'reposition') {
+    if (method === 'reposition') {
       broadcast(
         JSON.stringify({
           method: 'newposition',
-          id: pos.id,
-          x: pos.x,
-          z: pos.z,
-          angle: pos.angle,
+          id,
+          pose_x,
+          pose_z,
+          angle,
         })
       )
     }
-    if (pos.method === 'newposition') console.log('newone')
+    if (method === 'newposition') console.log('newone')
   })
 
   function broadcast(msg: string): void {
