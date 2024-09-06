@@ -34,15 +34,7 @@ export async function putRobot(req: Request, res: Response, next: NextFunction) 
   try {
     const id = req.params.id
     const { pose_x, pose_z, angle } = req.body
-
-    const result = await db.query('UPDATE robots SET pose_x=$1, pose_z=$2, angle=$3 WHERE id=$4', [
-      pose_x,
-      pose_z,
-      angle,
-      id,
-    ])
-    console.log(result)
-
+    await db.query('UPDATE robots SET pose_x=$1, pose_z=$2, angle=$3 WHERE id=$4', [pose_x, pose_z, angle, id])
     res.send({ msg: 'Robot position updated' })
   } catch (err) {
     next(err)
